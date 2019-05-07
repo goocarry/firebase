@@ -59,7 +59,7 @@ export default class PhoneAuthTest extends Component {
       confirmResult.confirm(codeInput)
         .then((user) => {
           this.setState({ message: 'Код подтвержден!' });
-          this.props.navigation.navigate('AddItem');
+          //this.props.navigation.navigate('MainTabNavigator');
         })
         .catch(error => this.setState({ message: `Ошибка подтверждения кода: ${error.message}` }));
     }
@@ -67,6 +67,11 @@ export default class PhoneAuthTest extends Component {
 
   signOut = () => {
     firebase.auth().signOut();
+  }
+
+  //функция для перехода к меню просмотра цен
+  toPrice = () => {
+    this.props.navigation.navigate('MainTabNavigator');
   }
 
   renderPhoneNumberInput() {
@@ -138,6 +143,7 @@ export default class PhoneAuthTest extends Component {
             <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
             <Text style={{ fontSize: 25 }}>Вы успешно вошли!</Text>
             <Text>{JSON.stringify(user)}</Text>
+            <Button title="Посмотреть прайс" color="green" onPress={this.toPrice} />
             <Button title="Выйти" color="red" onPress={this.signOut} />
           </View>
         )}
