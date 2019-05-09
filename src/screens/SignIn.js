@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Button, Text, TextInput, Image, ScrollView } from 'react-native';
+import { View, Button, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+import { Block, Text } from '../components/index';
+import * as theme from '../theme';
 
 import firebase from 'react-native-firebase';
 
@@ -133,7 +135,7 @@ export default class PhoneAuthTest extends Component {
         {!user && confirmResult && this.renderVerificationCodeInput()}
 
         {user && (
-          <ScrollView>
+          <Block center middle color="white" style={styles.contaner}>
             <View
               style={{
                 padding: 15,
@@ -143,7 +145,7 @@ export default class PhoneAuthTest extends Component {
               }}
             >
               <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
-              <Text style={{ fontSize: 25 }}>Вы успешно вошли!ХЪУЙ</Text>
+              <Text h1 bold>Вы успешно вошли!ХЪУЙ</Text>
               <Button title="Посмотреть прайс" color="green" onPress={this.toPrice} />
               <Button title="Выйти" color="red" onPress={this.signOut} />
             </View>
@@ -156,9 +158,15 @@ export default class PhoneAuthTest extends Component {
               color="green"
               onPress={() => this.props.navigation.navigate('List')}
             />
-          </ScrollView>
+          </Block>
         )}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  contaner: {
+    //backgroundColor: theme.colors.primary,
+  }
+})

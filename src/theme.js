@@ -1,19 +1,19 @@
 const colors = {
-    accent: '',
-    primary: '',
-    secondary: '',
-    tertiary: '',
-    black: '',
-    white: '',
-    gray: '',
-    gray2: ''
+    accent: "#F72B2B",
+    primary: "#D6181F",
+    secondary: "#3A3232",
+    tertiary: "#ED6004",
+    black: "#000000",
+    white: "#FFFFFF",
+    gray: "#D9D2D2",
+    gray2: "#F6F5F5",
 };
 
-const sizes ={
+const sizes = {
     //global sizes
     base: 12,
     font: 12,
-    border: 12,
+    border: 10,
 
     //font sizes
     h1: 32,
@@ -28,25 +28,25 @@ const sizes ={
 const fonts = {
     h1: {
         fontSize: sizes.h1,
-    }, 
+    },
     h2: {
         fontSize: sizes.h2,
-    }, 
+    },
     h3: {
         fontSize: sizes.h3,
-    }, 
+    },
     title: {
         fontSize: sizes.title,
-    }, 
+    },
     body: {
         fontSize: sizes.body,
-    }, 
+    },
     caption: {
         fontSize: sizes.caption,
-    }, 
+    },
     small: {
         fontSize: sizes.small,
-    }, 
+    },
 };
 
 export { colors, sizes, fonts };
