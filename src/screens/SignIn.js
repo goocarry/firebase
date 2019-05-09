@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, Text, TextInput, Image } from 'react-native';
+import { View, Button, Text, TextInput, Image, ScrollView } from 'react-native';
 
 import firebase from 'react-native-firebase';
 
@@ -40,7 +40,7 @@ export default class PhoneAuthTest extends Component {
   }
 
   componentWillUnmount() {
-     if (this.unsubscribe) this.unsubscribe();
+    if (this.unsubscribe) this.unsubscribe();
   }
 
   signIn = () => {
@@ -69,13 +69,14 @@ export default class PhoneAuthTest extends Component {
     firebase.auth().signOut();
   }
 
-  //функция для перехода к меню просмотра цен
+  //go to pricelist screen
   toPrice = () => {
     this.props.navigation.navigate('MainTabNavigator');
   }
 
+
   renderPhoneNumberInput() {
-   const { phoneNumber } = this.state;
+    const { phoneNumber } = this.state;
 
     return (
       <View style={{ padding: 25 }}>
@@ -132,20 +133,30 @@ export default class PhoneAuthTest extends Component {
         {!user && confirmResult && this.renderVerificationCodeInput()}
 
         {user && (
-          <View
-            style={{
-              padding: 15,
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-            }}
-          >
-            <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
-            <Text style={{ fontSize: 25 }}>Вы успешно вошли!</Text>
-            <Text>{JSON.stringify(user)}</Text>
-            <Button title="Посмотреть прайс" color="green" onPress={this.toPrice} />
-            <Button title="Выйти" color="red" onPress={this.signOut} />
-          </View>
+          <ScrollView>
+            <View
+              style={{
+                padding: 15,
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+              }}
+            >
+              <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
+              <Text style={{ fontSize: 25 }}>Вы успешно вошли!ХЪУЙ</Text>
+              <Button title="Посмотреть прайс" color="green" onPress={this.toPrice} />
+              <Button title="Выйти" color="red" onPress={this.signOut} />
+            </View>
+            <Button
+              title="Add an Item"
+              onPress={() => this.props.navigation.navigate('AddItem')}
+            />
+            <Button
+              title="List of Items"
+              color="green"
+              onPress={() => this.props.navigation.navigate('List')}
+            />
+          </ScrollView>
         )}
       </View>
     );
