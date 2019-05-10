@@ -5,30 +5,31 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Text
 } from 'react-native';
+import firebase from 'react-native-firebase';
 
 export default class AuthLoadingScreen extends React.Component {
+
   constructor(props) {
     super(props);
-    this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
-  //_bootstrapAsync = async () => {
-    _bootstrapAsync = () => {
-    //const userToken = await AsyncStorage.getItem('userToken');
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.navigation.navigate('MainTabNavigator');
+      } else {
+        this.props.navigation.navigate('PhoneAuthTest');
+      }
+    });
+  }
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate('PhoneAuthTest');
-  };
-
-  // Render any loading content that you like here
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
+        <ActivityIndicator size="large" />
+        <Text>Загрузка...</Text>
       </View>
     );
   }
@@ -41,3 +42,5 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 });
+
+

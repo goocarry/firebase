@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
 import { Block, Text } from '../components/index';
 import * as theme from '../theme';
+//import * as Font from 'expo-font';
 
 import firebase from 'react-native-firebase';
 
@@ -12,6 +13,9 @@ export default class PhoneAuthTest extends Component {
     super(props);
     this.unsubscribe = null;
     this.state = {
+      //font
+      //fontsLoaded: false,
+      //firebase phone auth
       user: null,
       message: '',
       codeInput: '',
@@ -20,14 +24,34 @@ export default class PhoneAuthTest extends Component {
     };
   }
 
+  //TODO troubles with expo-asset 
+  loadFonts() {
+    return Font.loadAsync({
+      "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
+      "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
+      "Montserrat-SemiBold": require("../assets/fonts/Montserrat-SemiBold.ttf"),
+      "Montserrat-Medium": require("../assets/fonts/Montserrat-Medium.ttf"),
+      "Montserrat-Light": require("../assets/fonts/Montserrat-Light.ttf"),
+    });
+  }
+
   static navigationOptions = {
     title: 'Автоцентр Дежнев',
   };
 
+
   componentDidMount() {
+    /*
+    //load fonts
+    await this.loadFonts();
+    this.setState({ fontsLoaded: true});
+    */
+
+    //firebase auth
+    //TODO should use asyncStorage for userToken
     this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user: user.toJSON() });
+        this.props.navigation.replace('MainTabNavigator');
       } else {
         // User has been signed out, reset the state
         this.setState({
@@ -41,9 +65,11 @@ export default class PhoneAuthTest extends Component {
     });
   }
 
+  
   componentWillUnmount() {
     if (this.unsubscribe) this.unsubscribe();
   }
+  
 
   signIn = () => {
     const { phoneNumber } = this.state;
@@ -67,13 +93,32 @@ export default class PhoneAuthTest extends Component {
     }
   };
 
-  signOut = () => {
-    firebase.auth().signOut();
+  /*
+    signOut = () => {
+      firebase.auth().signOut();
+    }
+  
+    //go to pricelist screen
+    toPrice = () => {
+      this.props.navigation.navigate('MainTabNavigator');
+    }
+  */
+
+  toHome = () => {
+    this.props.navigation.replace('Home')
   }
 
-  //go to pricelist screen
-  toPrice = () => {
-    this.props.navigation.navigate('MainTabNavigator');
+  renderHeader() {
+    return (
+      <Block column flex={1} >
+        <Block>
+          <Text>Автоцентр Дежнев</Text>
+        </Block>
+        <Block>
+          <Text>chart</Text>
+        </Block>
+      </Block>
+    )
   }
 
 
@@ -82,6 +127,7 @@ export default class PhoneAuthTest extends Component {
 
     return (
       <View style={{ padding: 25 }}>
+        <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
         <Text>Введите номер телефона:</Text>
         <TextInput
           autoFocus
@@ -134,32 +180,6 @@ export default class PhoneAuthTest extends Component {
 
         {!user && confirmResult && this.renderVerificationCodeInput()}
 
-        {user && (
-          <Block center middle color="white" style={styles.contaner}>
-            <View
-              style={{
-                padding: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1,
-              }}
-            >
-              <Image source={{ uri: successImageUri }} style={{ width: 300, height: 100, marginBottom: 25 }} />
-              <Text h1 bold>Вы успешно вошли!ХЪУЙ</Text>
-              <Button title="Посмотреть прайс" color="green" onPress={this.toPrice} />
-              <Button title="Выйти" color="red" onPress={this.signOut} />
-            </View>
-            <Button
-              title="Add an Item"
-              onPress={() => this.props.navigation.navigate('AddItem')}
-            />
-            <Button
-              title="List of Items"
-              color="green"
-              onPress={() => this.props.navigation.navigate('List')}
-            />
-          </Block>
-        )}
       </View>
     );
   }

@@ -19,11 +19,23 @@ export default class Typography extends Component {
             body,
             caption,
             small,
+            size,
+            //styling
             bold,
             semibold,
             light,
             center,
             right, 
+            //colors
+            color,
+            accent,
+            primary,
+            secondary,
+            tertiary,
+            black,
+            white,
+            gray,
+            gray2,
             style,
             children,
             ...props
@@ -39,11 +51,23 @@ export default class Typography extends Component {
             body && styles.body,
             caption && styles.caption,
             small && styles.small,
+            size && { fontSize: size, },
             bold && styles.bold,
             semibold && styles.semibold,
             light && styles.light,
             center && styles.center,
             right && styles.right, 
+            color && styles[color],
+            color && !styles[color] && { color },
+            // color shortcuts
+            accent && styles.accent,
+            primary && styles.primary,
+            secondary && styles.secondary,
+            tertiary && styles.tertiary,
+            black && styles.black,
+            white && styles.white,
+            gray && styles.gray,
+            gray2 && styles.gray2,
             style, //rewrite predefined styles 
         ];
 
