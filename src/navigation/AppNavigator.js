@@ -4,16 +4,16 @@ import { createAppContainer, createSwitchNavigator, createStackNavigator } from 
 import MainTabNavigator from './MainTabNavigator';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import PhoneAuthTest from '../screens/SignIn';
-import AddItem from '../screens/AddItem';
-import List from '../screens/List';
-import PriceScreen from '../screens/PriceScreen';
+//import AddItem from '../screens/AddItem';
+//import List from '../screens/List';
+//import PriceScreen from '../screens/PriceScreen';
 
 
 const AppNavigator = createStackNavigator(
   {
-    PriceScreen,
-    AddItem,
-    List,
+    //PriceScreen,
+    //AddItem,
+    //List,
     MainTabNavigator
   },
   {

@@ -5,6 +5,10 @@ import { createBottomTabNavigator, createAppContainer, createStackNavigator } fr
 
 import firebase from 'react-native-firebase';
 
+import AddItem from '../screens/AddItem';
+import List from '../screens/List';
+import PriceScreen from '../screens/PriceScreen';
+
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +26,20 @@ class HomeScreen extends React.Component {
   signOut = () => {
     firebase.auth().signOut();
     this.props.navigation.replace('PhoneAuthTest');
+  }
+
+
+  renderHeader() {
+    return (
+      <Block column flex={1} >
+        <Block>
+          <Text>Автоцентр Дежнев</Text>
+        </Block>
+        <Block>
+          <Text>chart</Text>
+        </Block>
+      </Block>
+    )
   }
 
 
@@ -95,11 +113,14 @@ class ProfileScreen extends React.Component {
 }
 
 const HomeStack = createStackNavigator({
-  HomeScreen
+  HomeScreen,
+  PriceScreen
 })
 
 const SettingsStack = createStackNavigator({
-  SettingsScreen
+  SettingsScreen,
+  AddItem,
+  List
 })
 
 const ProfileStack = createStackNavigator({

@@ -11,7 +11,7 @@ const successImageUri = 'https://lh3.googleusercontent.com/SW19uhr3T27H-TP9i-BtT
 export default class PhoneAuthTest extends Component {
   constructor(props) {
     super(props);
-    this.unsubscribe = null;
+    //this.unsubscribe = null;
     this.state = {
       //font
       //fontsLoaded: false,
@@ -47,6 +47,7 @@ export default class PhoneAuthTest extends Component {
     this.setState({ fontsLoaded: true});
     */
 
+    /*
     //firebase auth
     //TODO should use asyncStorage for userToken
     this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -63,13 +64,38 @@ export default class PhoneAuthTest extends Component {
         });
       }
     });
+   }
+    */
+
+    this.watchAuthState();
   }
 
-  
-  componentWillUnmount() {
-    if (this.unsubscribe) this.unsubscribe();
+
+  watchAuthState() {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log('onAuthStatheChanged: ', user)
+
+      if (user) {
+        this.props.navigation.replace('MainTabNavigator');
+      }
+      else {
+        this.setState({
+          user: null,
+          message: '',
+          codeInput: '',
+          phoneNumber: '+7',
+          confirmResult: null,
+        });
+      }
+    });
   }
-  
+
+  /*
+    componentWillUnmount() {
+      if (this.unsubscribe) this.unsubscribe();
+    }
+  */
+
 
   signIn = () => {
     const { phoneNumber } = this.state;
@@ -86,40 +112,11 @@ export default class PhoneAuthTest extends Component {
     if (confirmResult && codeInput.length) {
       confirmResult.confirm(codeInput)
         .then((user) => {
-          this.setState({ message: 'Код подтвержден!' });
-          //this.props.navigation.navigate('MainTabNavigator');
+          this.props.navigation.replace('MainTabNavigator');
         })
         .catch(error => this.setState({ message: `Ошибка подтверждения кода: ${error.message}` }));
     }
   };
-
-  /*
-    signOut = () => {
-      firebase.auth().signOut();
-    }
-  
-    //go to pricelist screen
-    toPrice = () => {
-      this.props.navigation.navigate('MainTabNavigator');
-    }
-  */
-
-  toHome = () => {
-    this.props.navigation.replace('Home')
-  }
-
-  renderHeader() {
-    return (
-      <Block column flex={1} >
-        <Block>
-          <Text>Автоцентр Дежнев</Text>
-        </Block>
-        <Block>
-          <Text>chart</Text>
-        </Block>
-      </Block>
-    )
-  }
 
 
   renderPhoneNumberInput() {
