@@ -8,6 +8,7 @@ import firebase from 'react-native-firebase';
 import AddItem from '../screens/AddItem';
 import List from '../screens/List';
 import PriceScreen from '../screens/PriceScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -82,31 +83,6 @@ class SettingsScreen extends React.Component {
           color="green"
           onPress={() => this.props.navigation.navigate('List')}
         />
-      </View>
-    );
-  }
-}
-
-class ProfileScreen extends React.Component {
-
-  static navigationOptions = {
-    title:'тут тоже'
-  };
-
-  signOutUser = async () => {
-    try {
-      await firebase.auth().signOut();
-      this.props.navigation.navigate('PhoneAuthTest');
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Профиль</Text>
-        <Button title="Выйти" color="red" onPress={this.signOutUser} />
       </View>
     );
   }
